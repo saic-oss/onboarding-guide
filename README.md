@@ -4,7 +4,24 @@ This guide is for new programs that want to be published on SAIC's public GitHub
 
 ## Philosophy
 
-Publishing something as open source is a radical change over what has been done in the past with private Source Code Management (SCM) tools like SIF GitLab. Because of the vastly increased scrutiny, our processes will have more structure and require more care than projects have in private Gitlab. There will be no exceptions to the process, regardless of how small or insignificant a project might be. Amendments can be made to the process after careful consideration from the public GitHub admin team.
+Publishing something as open source is a radical change over what has been done in the past with private Source Code Management (SCM) tools like SIF GitLab. Because of the vastly increased scrutiny, our processes will have more structure and require more care than projects have in private GitLab. There will be no exceptions to the process, regardless of how small or insignificant a project might be. Amendments can be made to the process after careful consideration from the public GitHub admin team.
+
+## Permission structure
+
+Org Owners can:
+
+- Do anything. Only Org Owners have permission to create new repositories.
+
+Compliance Team can:
+
+- Administer all existing repositories, including making changes to settings, webhooks, branch protections, etc.
+- Approve changes to controlled files and folders, like `/.github`, `/.pre-commit-config.yaml`, `/Taskfile.yml`, etc.
+- Force-push to the trunk branch (but please never do it!)
+- Merge Pull Requests without the required approvals/status checks (Should only happen very rarely in exceptional circumstances)
+
+Project team members can:
+
+- Have write access to the repositories in their project. Write access lets you read, clone, and push to the repository, as well as manage issues and pull requests.
 
 ## Criteria
 
