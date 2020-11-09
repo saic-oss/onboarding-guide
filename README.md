@@ -1,10 +1,10 @@
 # onboarding-guide
 
-This guide is for new programs that want to be published on SAIC's public GitHub organization.
+This guide is to be used by new programs that want to be published on SAIC's public GitHub organization.
 
 ## Philosophy
 
-Publishing something as open source is a radical change over what has been done in the past with private Source Code Management (SCM) tools like SIF GitLab. Because of the vastly increased scrutiny, our processes will have more structure and require more care than projects have in private GitLab. There will be no exceptions to the process, regardless of how small or insignificant a project might be. Amendments can be made to the process after careful consideration from the public GitHub admin team.
+Publishing something as open source is a radical change over what has been done in the past with private Source Code Management (SCM) tools like SAIC Innovation Factory's GitLab. Because of the vastly increased scrutiny, our processes will have more structure and require more care than projects have in private GitLab. There will be no exceptions to the process, regardless of how small or insignificant a project might be. Amendments can be made to the process after careful consideration from the public GitHub admin team.
 
 ## Supported project types
 
@@ -42,7 +42,7 @@ Project team members can:
 
 Projects that want to publish on SAIC's public GitHub must meet all of the following criteria.
 
-1. The admins (the people in the team [@saic-oss/compliance](https://github.com/orgs/saic-oss/teams/compliance)) must receive an email from the Chief Technical Officer (CTO) and the Chief Intellectual Property Council (CIPC) authorizing the new project, including a description of what the project entails. The people currently in those positions are Charles Onstott (CTO) and Samantha Garner (CIPC)
+1. The admins (the people in the team [@saic-oss/compliance](https://github.com/orgs/saic-oss/teams/compliance)) must receive an email from the Chief Technical Officer (CTO) and the Chief Intellectual Property Council (CIPC) authorizing the new project, including a description of what the project entails.
 1. Each repository is able to pass the required compliance pipelines (see details below)
 1. The trunk branch of the project is named `main`. At the moment only [GitHub Flow](https://guides.github.com/introduction/flow/) is supported. No [GitFlow](https://www.atlassian.com/git/tutorials/comparing-workflows/gitflow-workflow).
 1. The project must be published as Open Source Software (OSS) and use the Apache 2.0 license. If you need to use a different license, approval is needed from the CIPC and the compliance team with appropriate justification. Any kind of custom license or any license that can't be found on [TLDRLegal](https://tldrlegal.com/) will be met with strong opposition.
@@ -53,7 +53,11 @@ Projects that want to publish on SAIC's public GitHub must meet all of the follo
 1. A GitHub Team is created with the name of the project
 1. The members of the project are added to the team by being invited as contributors to the organization. Each member is required to have MFA attached to their GitHub account. 
 1. The Compliance team receives a request for a new repository to be created. The request must include the project's name, short description, and details on what type of technology stack it will be made of.
-1. Compliance team creates the new repository from a template and gives the new project team write access to the project
+1. Compliance team creates the new repository from a template and gives the new project team write access to the project. The repo's visibility is set to private.
+1. Project team creates a Pull Request (PR) to add the initial migration of code (or new code if the project is greenfield)
+1. Compliance team does a security audit and review of the initial PR
+1. Compliance team changes the repo's visibility to public AFTER the Codefresh CI pipeline goes green in the PR but BEFORE the initial PR is merged.
+1. Compliance team adds the missing Branch Protection Rule (since they aren't available in private projects) and sets the WIP, Codefresh, and Codacy status checks as required. See [Branch Protection Rule](#branch-protection-rule) for full details on the required Branch Protection Rule.
 
 ## Software Development Lifecycle (SDLC)
 
@@ -112,3 +116,23 @@ All tasks must be able to be independently run. For example, if the `test` task 
 ### ASDF
 
 The Docker image that runs all CI pipeline stages uses [ASDF](https://asdf-vm.com/#/) whenever possible for the installation of tools. If you include a `.tool-versions` file the pipeline will ensure the correct version of the tools you use are installed before running the stage. If you do not include a `.tool-versions` file the default installed version of all tools will be used. We strongly encourage the use of a `.tool-versions` file because the default version installed of the tools will change with time and are not guaranteed to work for you, or even with each-other.
+
+## Branch Protection Rule
+
+The following is required to be set as a Branch Protection Rule on every new and existing project:
+
+- Branch name pattern: `main`
+- Require pull request reviews before merging: Yes
+- Required approving reviews: At least 1, can be more if project team desires
+- Dismiss stale pull request approvals when new commits are pushed: Yes
+- Require review from Code Owners: Yes
+- Restrict who can dismiss pull request reviews: Yes (leave the list empty)
+- Require status checks to pass before merging: Yes
+- Require branches to be up to date before merging: Yes
+- Required status checks: `Codacy Static Code Analysis`, `Public GitHub/<InsertNameOfPipelineHere>`, `WIP`
+- Require signed commits: No
+- Require linear history: No
+- Include administrators: No
+- Restrict who can push to matching branches: Yes (leave the list blank)
+- Allow force pushes: No
+- Allow deletions: No
