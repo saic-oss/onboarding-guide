@@ -4,22 +4,22 @@ This guide is for new programs that want to be published on SAIC's public GitHub
 
 ## Philosophy
 
-Publishing something as open source is a radical change over what has been done in the past with private Source Code Management (SCM) tools like SIF GitLab. Because of the vastly increased scrutiny, our processes will have more structure and require more care than projects have in private Gitlab.
+Publishing something as open source is a radical change over what has been done in the past with private Source Code Management (SCM) tools like SIF GitLab. Because of the vastly increased scrutiny, our processes will have more structure and require more care than projects have in private Gitlab. There will be no exceptions to the process, regardless of how small or insignificant a project might be. Amendments can be made to the process after careful consideration from the public GitHub admin team.
 
 ## Criteria
 
 Projects that want to publish on SAIC's public GitHub must meet all of the following criteria.
 
-1. The admins (the people in the team [@saic-oss/compliance](https://github.com/orgs/saic-oss/teams/compliance)) must have an email from the Chief Technical Officer (CTO) and the Chief Intellectual Property Council (CIPC) authorizing the new project, including a description of what the project entails.
-    1. The people currently in those positions are Charles Onstott and Samantha Garner
+1. The admins (the people in the team [@saic-oss/compliance](https://github.com/orgs/saic-oss/teams/compliance)) must receive an email from the Chief Technical Officer (CTO) and the Chief Intellectual Property Council (CIPC) authorizing the new project, including a description of what the project entails. The people currently in those positions are Charles Onstott (CTO) and Samantha Garner (CIPC)
 1. Each repository is able to pass the required compliance pipelines (see details below)
 1. The trunk branch of the project is named `main`. At the moment only [GitHub Flow](https://guides.github.com/introduction/flow/) is supported. No [GitFlow](https://www.atlassian.com/git/tutorials/comparing-workflows/gitflow-workflow).
+1. The project must be published as Open Source Software (OSS) and use the Apache 2.0 license. If you need to use a different license, approval is needed from the CIPC and the compliance team with appropriate justification. Any kind of custom license or any license that can't be found on [TLDRLegal](https://tldrlegal.com/) will be met with strong opposition.
 
 ## Process
 
 1. The Compliance team receives authorization from CTO and CIPC that a new project can be published
 1. A GitHub Team is created with the name of the project
-1. The members of the project are added to the team by being invited as contributors to the organization. Each member is required to have MFA attached to their GitHub account 
+1. The members of the project are added to the team by being invited as contributors to the organization. Each member is required to have MFA attached to their GitHub account. 
 1. The Compliance team receives a request for a new repository to be created. The request must include the project's name, short description, and details on what type of technology stack it will be made of.
 1. Compliance team creates the new repository from a template and gives the new project team write access to the project
 
@@ -37,7 +37,7 @@ In order to ensure the quality of the work we publish to the public GitHub, deve
     
 ## Notes
 
-- The compliant pipelines from Codefresh are currently very simple. They will be built out with more checks as time goes on.
+- The compliant pipelines from Codefresh are currently very simple. They will be built out with more checks as time goes on. You will be given 
 - Due to the danger in potentially leaking secrets when running the CI pipeline (especially in forks), and to reduce the load on the limited concurrent pipelines we have in Codefresh, all runs of the CI pipeline are triggered by creating a comment in the Pull Request with the value `/test`. You must have your [org visibility](https://github.com/orgs/saic-oss/people) set to "public" for Codefresh to accept you as someone who is authorized to trigger a pipeline. Please review what has been changed before triggering a new CI pipeline.
 - All projects are required to use certain tools. For full details see the [Tools][#tools] section.
 
@@ -61,3 +61,22 @@ pre-commit install
 # Manually run the hooks (if necessary). They will automatically run on every git commit.
 pre-commit run --all-files
 ```
+
+### Go-Task
+
+[Go-Task](https://taskfile.dev/#/) is a task runner and is a simpler alternative to `make`. All projects require a Taskfile because the CI pipeline uses it to run its stages. Doing it this way makes it so that individual projects can be flexible with what each stage does while providing a simple configuration in the CI engine.
+
+The following tasks are required to be present in all projects.
+
+1. `task validate` - Runs all pre-commit hooks to validate that they were run before pushing the commit up. The pipeline will fail if the pre-commit hooks were not run.
+1. PROPOSED - `task build` - If applicable, builds the production artifact
+1. PROPOSED - `task test` - If applicable, Runs all automated tests, and any tools that rely on those tests, like SonarQube
+1. PROPOSED - `task secure` - If applicable, Runs all security tools, like container security scans, OpenSCAP, Fossa/WhiteSource, etc.
+1. PROPOSED - `task deliver` - If applicable, Delivers the production artifact to an artifact repository
+1. PROPOSED - `task deploy` - If applicable, Deploys to specified environment (Note: This is not likely to be used as we use Harness for compliant deployments.)
+
+All tasks must be able to be independently run. For example, if the `test` task depends on `build`, it must run `build` as part of `task test`.
+
+### ASDF
+
+The Docker image that runs all CI pipeline stages uses [ASDF](https://asdf-vm.com/#/) whenever possible for the installation of tools. If you include a `.tool-versions` file the pipeline will ensure the correct version of the tools you use are installed before running the stage. If you do not include a `.tool-versions` file the default installed version of all tools will be used. We strongly encourage the use of a `.tool-versions` file because the default version installed of the tools will change with time and are not guaranteed to work for you, or even with each-other.
