@@ -6,6 +6,19 @@ This guide is for new programs that want to be published on SAIC's public GitHub
 
 Publishing something as open source is a radical change over what has been done in the past with private Source Code Management (SCM) tools like SIF GitLab. Because of the vastly increased scrutiny, our processes will have more structure and require more care than projects have in private GitLab. There will be no exceptions to the process, regardless of how small or insignificant a project might be. Amendments can be made to the process after careful consideration from the public GitHub admin team.
 
+The types of projects that get published must be supported. If you have a project that you want to publish of a type that is currently unsupported, please let us know so we can build out support for that project. It will not be published until it supported.
+
+The types of projects we currently support are:
+
+- A Terraform module
+- A containerized Java/SpringBoot app that uses Gradle
+
+Types of projects that we don't yet support but will soon are:
+
+- A Helm chart
+- A containerized Java/SpringBoot app that uses Maven
+- A Docusaurus documentation site that deploys to GitHub Pages
+
 ## Permission structure
 
 Org Owners can:
