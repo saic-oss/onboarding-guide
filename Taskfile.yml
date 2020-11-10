@@ -9,7 +9,12 @@ tasks:
       - pre-commit install
       - pre-commit run -a
 
-  example:
-    desc: Example to show the formatting of a task
+  test:
+    desc: Run automated tests
     cmds:
-      - echo "Peter Piper picked a peck of pickled peppers"
+      - echo "N/A"
+
+  secure:
+    desc: Run automated security checks
+    cmds:
+      - echo "N/A"

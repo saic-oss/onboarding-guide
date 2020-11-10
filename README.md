@@ -105,11 +105,10 @@ pre-commit run --all-files
 The following tasks are required to be present in all projects.
 
 1. `task validate` - Runs all pre-commit hooks to validate that they were run before pushing the commit up. The pipeline will fail if the pre-commit hooks were not run.
-1. PROPOSED - `task build` - If applicable, builds the production artifact
-1. PROPOSED - `task test` - If applicable, Runs all automated tests, and any tools that rely on those tests, like SonarQube
-1. PROPOSED - `task secure` - If applicable, Runs all security tools, like container security scans, OpenSCAP, Fossa/WhiteSource, etc.
-1. PROPOSED - `task deliver` - If applicable, Delivers the production artifact to an artifact repository
-1. PROPOSED - `task deploy` - If applicable, Deploys to specified environment (Note: This is not likely to be used as we use Harness for compliant deployments.)
+1. `task test` - If applicable, Runs all automated tests, and any tools that rely on those tests, like SonarQube
+1. `task secure` - If applicable, Runs all security tools, like container security scans, OpenSCAP, Fossa/WhiteSource, etc.
+1. `task deliver` - If applicable, Delivers the production artifact to an artifact repository
+1. `task deploy` - If applicable, Deploys to specified environment (Note: This is not likely to be used as we use Harness for compliant deployments.)
 
 All tasks must be able to be independently run. For example, if the `test` task depends on `build`, it must run `build` as part of `task test`.
 
