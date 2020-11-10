@@ -42,7 +42,7 @@ Project team members can:
 
 Projects that want to publish on SAIC's public GitHub must meet all of the following criteria.
 
-1. The admins (the people in the team [@saic-oss/compliance](https://github.com/orgs/saic-oss/teams/compliance)) must receive an email from the Chief Technical Officer (CTO) and the Chief Intellectual Property Council (CIPC) authorizing the new project, including a description of what the project entails.
+1. The admins (org owners or the people in the team [@saic-oss/compliance](https://github.com/orgs/saic-oss/teams/compliance)) must receive an email from the Chief Technical Officer (CTO) and the Chief Intellectual Property Council (CIPC) authorizing the new project, including a description of what the project entails.
 1. Each repository is able to pass the required compliance pipelines (see details below)
 1. The trunk branch of the project is named `main`. At the moment only [GitHub Flow](https://guides.github.com/introduction/flow/) is supported. No [GitFlow](https://www.atlassian.com/git/tutorials/comparing-workflows/gitflow-workflow).
 1. The project must be published as Open Source Software (OSS) and use the Apache 2.0 license. If you need to use a different license, approval is needed from the CIPC and the compliance team with appropriate justification. Any kind of custom license or any license that can't be found on [TLDRLegal](https://tldrlegal.com/) will be met with strong opposition.
