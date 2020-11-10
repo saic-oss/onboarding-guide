@@ -3,7 +3,7 @@
 version: "2"
 
 tasks:
-  validatePreCommitHooks:
+  validate:
     desc: Validate the pre-commit hooks
     cmds:
       - pre-commit install
