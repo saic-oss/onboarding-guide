@@ -32,7 +32,7 @@ Compliance Team can:
 - Administer all existing repositories, including making changes to settings, webhooks, branch protections, etc.
 - Approve changes to controlled files and folders, like `/.github`, `/.pre-commit-config.yaml`, `/Taskfile.yml`, etc.
 - Force-push to the trunk branch (but please never do it!)
-- Merge Pull Requests without the required approvals/status checks (Should only happen very rarely in exceptional circumstances)
+- Merge Pull Requests without the required approvals/status checks (should only happen very rarely in exceptional circumstances)
 
 Project team members can:
 
