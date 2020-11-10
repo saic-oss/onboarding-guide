@@ -12,9 +12,19 @@ tasks:
   test:
     desc: Run automated tests
     cmds:
-      - echo "N/A"
+      - echo "Not applicable for this project"
 
   secure:
     desc: Run automated security checks
     cmds:
-      - echo "N/A"
+      - echo "Not applicable for this project"
+
+  deliver:
+    desc: Deliver artifact
+    cmds:
+      - echo "Not applicable for this project"
+
+  deploy:
+    desc: Deploy project
+    cmds:
+      - echo "Not applicable for this project"
