@@ -53,7 +53,7 @@ Projects that want to publish on SAIC's public GitHub must meet all of the follo
 1. A GitHub Team is created with the name of the project
 1. The members of the project are added to the team by being invited as contributors to the organization. Each member is required to have MFA attached to their GitHub account.
 1. The Compliance team receives a request for a new repository to be created. The request must include the project's name, short description, and details on what type of technology stack it will be made of.
-1. Compliance team creates the new repository from a template and gives the new project team write access to the project. The repo's visibility is set to private.
+1. An Org Owner creates the new repository from a template and gives the new project team write access to the project. The repo's visibility is set to private.
 1. Project team creates a Pull Request (PR) to add the initial migration of code (or new code if the project is greenfield)
 1. Compliance team does a security audit and review of the initial PR
 1. Compliance team changes the repo's visibility to public AFTER the Codefresh CI pipeline goes green in the PR but BEFORE the initial PR is merged.
@@ -73,8 +73,8 @@ In order to ensure the quality of the work we publish to the public GitHub, deve
 
 ## Notes
 
-- The compliant pipelines from Codefresh are currently very simple. They will be built out with more checks as time goes on. You will be given
 - Due to the danger in potentially leaking secrets when running the CI pipeline (especially in forks), and to reduce the load on the limited concurrent pipelines we have in Codefresh, all runs of the CI pipeline are triggered by creating a comment in the Pull Request with the value `/test`. You must have your [org visibility](https://github.com/orgs/saic-oss/people) set to "public" for Codefresh to accept you as someone who is authorized to trigger a pipeline. Please review what has been changed before triggering a new CI pipeline.
+- The compliant pipelines from Codefresh are currently very simple. They will be built out with more checks as time goes on. You will be given adequate advance notice when this happens and you'll be able to use the comment trigger `/test-next` to test PRs against the new changes before they are merged and are active when you run `/test`.
 - All projects are required to use certain tools. For full details see the [Tools][#tools] section.
 
 ## Tools
@@ -104,13 +104,15 @@ pre-commit run --all-files
 
 The following tasks are required to be present in all projects.
 
-1. `task validate` - Runs all pre-commit hooks to validate that they were run before pushing the commit up. The pipeline will fail if the pre-commit hooks were not run.
+1. `task validate` - Runs all pre-commit hooks to validate that they were run before pushing the commit up, along with any other validations your project might need. The pipeline will fail if the pre-commit hooks were not run.
 1. `task test` - If applicable, Runs all automated tests, and any tools that rely on those tests, like SonarQube
 1. `task secure` - If applicable, Runs all security tools, like container security scans, OpenSCAP, Fossa/WhiteSource, etc.
 1. `task deliver` - If applicable, Delivers the production artifact to an artifact repository
 1. `task deploy` - If applicable, Deploys to specified environment (Note: This is not likely to be used as we use Harness for compliant deployments.)
 
 All tasks must be able to be independently run. For example, if the `test` task depends on `build`, it must run `build` as part of `task test`.
+
+If your project is unique in some way that can't be satisfied by this flow of events, please let the admins know. We can discuss creating a custom pipeline in Codefresh. This is to be discouraged however, we want to stick with the compliant go-task based pipeline whenever possible.
 
 ### ASDF
 
