@@ -14,12 +14,12 @@ The types of projects we currently support are:
 
 - A Terraform module
 - A containerized Java/SpringBoot app that uses Gradle
-
-Types of projects that we don't yet support but will soon are:
-
-- A Helm chart
-- A containerized Java/SpringBoot app that uses Maven
+- A Helm chart library that hosts its packages on GitHub Pages
 - A Docusaurus documentation site that deploys to GitHub Pages
+
+Types of projects that we don't yet support but are looking at are:
+
+- A containerized Java/SpringBoot app that uses Maven
 
 ## Permission structure
 
